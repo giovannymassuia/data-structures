@@ -9,7 +9,8 @@ type TrieNode struct {
 	StaticChildren map[string]*TrieNode
 	ParameterChild *TrieNode
 	Handler        func() bool
-	ParameterName  *string
+	ParameterName  string // Changed from pointer to string
+	HasParam       bool   // New field to indicate if ParameterName is set
 }
 
 type Trie struct {
@@ -18,9 +19,7 @@ type Trie struct {
 
 func NewTrie() *Trie {
 	return &Trie{
-		Root: &TrieNode{
-			StaticChildren: make(map[string]*TrieNode),
-		},
+		Root: newTrieNode(),
 	}
 }
 
@@ -31,9 +30,9 @@ func newTrieNode() *TrieNode {
 }
 
 func (t *Trie) Insert(path string, handler func() bool) error {
-	var current *TrieNode = t.Root
-	var segments []string = splitPath(path)
-	var seenParameters map[string]bool = make(map[string]bool)
+	current := t.Root
+	segments := splitPath(path)
+	seenParameters := make(map[string]bool)
 
 	// _: the index of the current segment
 	// segment: the current segment
@@ -52,15 +51,14 @@ func (t *Trie) Insert(path string, handler func() bool) error {
 			if current.ParameterChild != nil {
 				// If the parameter child is not nil, then we need to check if the parameter name is the same
 				// *current will access the value of the pointer
-				if *current.ParameterChild.ParameterName != paramName {
+				if current.ParameterChild.ParameterName != paramName {
 					return errors.New("Invalid path: " + path + ". Parameter " + paramName + " is already defined.")
 				}
 			} else {
 				// If the parameter child is nil, then we need to create a new node
-				// &TrieNode{} will create a new TrieNode and return a pointer to it
-				//paramNode := &TrieNode{}
 				paramNode := newTrieNode()
-				paramNode.ParameterName = &paramName // &paramName will return a pointer to the paramName variable
+				paramNode.ParameterName = paramName
+				paramNode.HasParam = true
 				current.ParameterChild = paramNode
 			}
 
@@ -95,7 +93,7 @@ type SearchResult struct {
 	Params  map[string]string
 }
 
-func (t *Trie) Search(path string) SearchResult {
+func (t *Trie) Search(path string) (result SearchResult) {
 	current := t.Root
 	segments := splitPath(path)
 	capturedParams := make(map[string]string)
@@ -106,9 +104,9 @@ func (t *Trie) Search(path string) SearchResult {
 		next, exists := current.StaticChildren[segment]
 
 		// If the next node does not exist, then we need to check if the current node has a parameter child
-		if !exists && current.ParameterChild != nil {
+		if !exists && current.ParameterChild != nil && current.ParameterChild.HasParam {
 			next = current.ParameterChild
-			capturedParams[*next.ParameterName] = segment
+			capturedParams[current.ParameterChild.ParameterName] = segment
 		}
 
 		// If the next node does not exist and the current node does not have a parameter child, then the path does not exist
