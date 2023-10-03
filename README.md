@@ -1,9 +1,9 @@
-# Repo with Algorithms and Data Structures
+# Repo with Data Structures
 
-## Algorithms
+## Data Structures
 
--   [Dijkstra's algorithm](./dijkstra)
+-   [Trie](./trie)
 
 ## Automated tests
 
-[![Dijkstra Tests](https://github.com/giovannymassuia/algorithms/actions/workflows/dijkstra-java.yml/badge.svg?branch=main)](https://github.com/giovannymassuia/algorithms/actions/workflows/dijkstra-java.yml)
+[![Trie Tests](https://github.com/giovannymassuia/data-structures/actions/workflows/trie-java.yml/badge.svg?branch=main)](https://github.com/giovannymassuia/data-structures/actions/workflows/trie-java.yml)
