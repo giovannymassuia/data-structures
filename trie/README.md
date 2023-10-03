@@ -18,7 +18,30 @@ The main features of our implementation are:
 -   Support for dynamic path parameters (e.g., `:id`, `:groupId`).
 -   Guarantees to avoid ambiguous routes (e.g., `/users/:id` vs. `/users/:userId`).
 
-Please refer to the code in this repository for detailed implementation in both Java and Go.
+Please refer to the code in this repository for detailed implementation.
+
+```
+root
+│
+└─ users
+   │
+   └─ :id (parameter node for user id)
+       │
+       └─ groups
+           │
+           ├─ :groupId (parameter node for group id)
+           │   │
+           │   └─ approve
+           │
+           └─ (other static routes if they exist)
+       │
+       └─ (other static routes if they exist)
+   │
+   └─ (other static routes if they exist)
+│
+└─ (other top-level static routes if they exist)
+
+```
 
 ## Other Use Cases for Trie
 
