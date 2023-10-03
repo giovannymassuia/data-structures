@@ -1,6 +1,6 @@
 on: push
 
-name: Trie Tests
+name: Trie Tests Java
 
 jobs:
     Tests:
