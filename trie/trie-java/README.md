@@ -50,3 +50,7 @@ For detailed method functionalities and complexities, refer to the sections abov
 -   Thus, for a single search operation, the space complexity is \(O(n)\).
 
 In conclusion, both the `insert` and `search` methods in our trie implementation for route resolution have a time and space complexity of \(O(n)\), where \(n\) is the length of the path being inserted or searched for.
+
+---
+
+Credits to ChatGPT for the help with this README.md 😛

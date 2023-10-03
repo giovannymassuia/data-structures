@@ -60,3 +60,7 @@ Beyond route resolution, tries are versatile and find use in various domains:
 ## Conclusion
 
 Tries offer an elegant solution to a range of problems associated with string manipulation and storage. This repository's route resolution implementation showcases the efficiency and clarity that tries bring to the table.
+
+---
+
+Credits to ChatGPT for the help with this README.md 😛
